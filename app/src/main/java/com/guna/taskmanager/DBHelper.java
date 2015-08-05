@@ -5,12 +5,10 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.guna.taskmanager.dummy.DummyContent;
 
-/**
- * Created by Gunaseelan on 05-08-2015.
- */
 public class DBHelper extends SQLiteOpenHelper {
 
     private final static String DB_NAME = "MyDb";
@@ -48,10 +46,11 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public void getRecords() {
         SQLiteDatabase db = getReadableDatabase();
-        String query = "SELECT * FROM Records ORDER BY COUNT DESC;";
+        String query = "SELECT ID,NAME,PATH,DESC FROM Records ORDER BY COUNT DESC;";
         Cursor c = db.rawQuery(query, null);
         if (c.moveToFirst()) {
             do {
+                Log.v("App", c.getString(0) + ", " + c.getString(1) + ", " + c.getString(2) + ", " + c.getString(3));
                 DummyContent.addItem(new DummyContent.DummyItem(c.getString(0), c.getString(1), c.getString(2), c.getString(3)));
             } while (c.moveToNext());
         }
