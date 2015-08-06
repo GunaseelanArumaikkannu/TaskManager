@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -42,8 +43,15 @@ public class LoginActivityFragment extends Fragment {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getActivity(), UploadActivity.class);
-                startActivity(i);
+                String name = userName.getText().toString().toLowerCase();
+                String password = passWord.getText().toString().toLowerCase();
+                if (name.equals(password) && (name.equals("admin") || name.equals("user"))) {
+                    Intent i = new Intent(getActivity(), UploadActivity.class);
+                    i.putExtra("name", name);
+                    startActivity(i);
+                }else {
+                    Toast.makeText(getActivity(),"Please check credentials", Toast.LENGTH_LONG).show();
+                }
             }
         });
     }

@@ -14,7 +14,7 @@ import com.guna.taskmanager.dummy.DummyContent;
 import java.util.List;
 
 /**
- * Created by Gunaseelan on 06-08-2015.
+ * Created by Gunaseelan on 06-08-2015. same
  */
 public class MyListAdapter extends ArrayAdapter<DummyContent.DummyItem> {
     public MyListAdapter(Context context, int resource) {
@@ -39,7 +39,7 @@ public class MyListAdapter extends ArrayAdapter<DummyContent.DummyItem> {
 
         if (p != null) {
             ImageView iv1 = (ImageView) v.findViewById(R.id.image);
-            TextView tt2 = (TextView) v.findViewById(R.id.time);
+            TextView tt2 = (TextView) v.findViewById(R.id.title);
             TextView tt3 = (TextView) v.findViewById(R.id.desc);
 
             if (iv1 != null) {

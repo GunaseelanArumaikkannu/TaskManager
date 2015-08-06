@@ -72,8 +72,16 @@ public class ItemFragment extends Fragment implements AbsListView.OnItemClickLis
         // TODO: Change Adapter to display your title
 //        mAdapter = new ArrayAdapter<DummyContent.DummyItem>(getActivity(),
 //                android.R.layout.simple_list_item_1, android.R.id.text1, DummyContent.ITEMS);
-        mAdapter = new MyListAdapter(getActivity(),R.layout.items, DummyContent.ITEMS);
+        mAdapter = new MyListAdapter(getActivity(), R.layout.items, DummyContent.ITEMS);
         setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        DummyContent.ITEMS.clear();
+        dbHelper.getRecords();
+        ((MyListAdapter) mListView.getAdapter()).notifyDataSetChanged();
     }
 
     @Override
@@ -83,7 +91,7 @@ public class ItemFragment extends Fragment implements AbsListView.OnItemClickLis
 
         // Set the adapter
         mListView = (AbsListView) view.findViewById(android.R.id.list);
-        ((AdapterView<ListAdapter>) mListView).setAdapter(mAdapter);
+        mListView.setAdapter(mAdapter);
 
         // Set OnItemClickListener so we can be notified on item clicks
         mListView.setOnItemClickListener(this);
@@ -142,13 +150,15 @@ public class ItemFragment extends Fragment implements AbsListView.OnItemClickLis
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        public void onFragmentInteraction(String id);
+        void onFragmentInteraction(String id);
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.menu_upload, menu);
+        String name = getActivity().getIntent().getStringExtra("name");
+        if (name.equals("admin"))
+            inflater.inflate(R.menu.menu_upload, menu);
     }
 
 
