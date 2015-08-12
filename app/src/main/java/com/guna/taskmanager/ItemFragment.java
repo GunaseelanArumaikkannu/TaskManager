@@ -3,6 +3,7 @@ package com.guna.taskmanager;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -50,7 +51,7 @@ public class ItemFragment extends Fragment implements AbsListView.OnItemClickLis
      * The Adapter which will be used to populate the ListView/GridView with
      * Views.
      */
-    private ListAdapter mAdapter;
+    private MyListAdapter mAdapter;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -157,7 +158,7 @@ public class ItemFragment extends Fragment implements AbsListView.OnItemClickLis
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         String name = getActivity().getIntent().getStringExtra("name");
-        if (name.equals("admin"))
+        if (name != null && name.equals("admin"))
             inflater.inflate(R.menu.menu_upload, menu);
     }
 
@@ -186,5 +187,10 @@ public class ItemFragment extends Fragment implements AbsListView.OnItemClickLis
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void filter(String query) {
+        Log.v("App", "Query in filter - " + query);
+        mAdapter.getFilter().filter(query);
     }
 }
