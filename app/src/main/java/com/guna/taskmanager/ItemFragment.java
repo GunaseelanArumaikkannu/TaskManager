@@ -51,7 +51,8 @@ public class ItemFragment extends Fragment implements AbsListView.OnItemClickLis
      * The Adapter which will be used to populate the ListView/GridView with
      * Views.
      */
-    private MyListAdapter mAdapter;
+//    private MyListAdapter mAdapter;
+    private BaseListAdapter mAdapter;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -73,7 +74,7 @@ public class ItemFragment extends Fragment implements AbsListView.OnItemClickLis
         // TODO: Change Adapter to display your title
 //        mAdapter = new ArrayAdapter<DummyContent.DummyItem>(getActivity(),
 //                android.R.layout.simple_list_item_1, android.R.id.text1, DummyContent.ITEMS);
-        mAdapter = new MyListAdapter(getActivity(), R.layout.items, DummyContent.ITEMS);
+        mAdapter = new BaseListAdapter(getActivity(), DummyContent.ITEMS);
         setHasOptionsMenu(true);
     }
 
@@ -82,7 +83,7 @@ public class ItemFragment extends Fragment implements AbsListView.OnItemClickLis
         super.onResume();
         DummyContent.ITEMS.clear();
         dbHelper.getRecords();
-        ((MyListAdapter) mListView.getAdapter()).notifyDataSetChanged();
+        ((BaseListAdapter) mListView.getAdapter()).notifyDataSetChanged();
     }
 
     @Override
