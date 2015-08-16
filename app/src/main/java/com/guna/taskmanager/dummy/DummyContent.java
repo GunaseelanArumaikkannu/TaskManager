@@ -28,6 +28,11 @@ public class DummyContent {
         ITEM_MAP.put(item.id, item);
     }
 
+    public static void clearItem() {
+        ITEMS.clear();
+        ITEM_MAP.clear();
+    }
+
     /**
      * A dummy item representing a piece of title.
      */
@@ -36,12 +41,14 @@ public class DummyContent {
         public String title;
         public String path;
         public String description;
+        public int count;
 
-        public DummyItem(String id, String title, String path, String description) {
+        public DummyItem(String id, String title, String path, String description, int count) {
             this.id = id;
             this.title = title;
             this.path = path;
             this.description = description;
+            this.count = count;
         }
 
         @Override

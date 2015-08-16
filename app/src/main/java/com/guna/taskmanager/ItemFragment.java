@@ -1,6 +1,7 @@
 package com.guna.taskmanager;
 
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.util.Log;
@@ -120,6 +121,25 @@ public class ItemFragment extends Fragment implements AbsListView.OnItemClickLis
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+        DummyContent.DummyItem p = (DummyContent.DummyItem) mAdapter.getItem(position);
+        Fragment fragment = ItemDetailFragment.newInstance(p.title, p.path, p.description);
+        FragmentManager fm = getFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        Log.v("App", "Clicked item " + p.id + ", " + p.count);
+        DummyContent.clearItem();
+        dbHelper.updateCount(p.id, p.count+1);
+        dbHelper.getRecords();
+        ((BaseListAdapter) mListView.getAdapter()).notifyDataSetChanged();
+        if (!fragment.isAdded()) {
+            ft.add(R.id.fragment, fragment, "ItemDetails");
+            ft.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
+                    .show(fragment)
+                    .commit();
+        } else
+            ft.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
+                    .show(fragment)
+                    .commit();
         /*if (null != mListener) {
             // Notify the active callbacks interface (the activity, if the
             // fragment is attached to one) that an item has been selected.
